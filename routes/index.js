@@ -6,6 +6,7 @@ const passport = require('passport');
 const indexController = require('../controllers/indexController')
 /* GET home page. */
 router.get('/index', indexController.index);
+router.get('/about', indexController.about);
 
 
 module.exports = router;
