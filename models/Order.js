@@ -10,7 +10,7 @@ const orderSchema = new mongoose.Schema(
         total: {type:Number,required:true},
 
     },
-    { collection: 'users' }
+    { collection: 'orders' }
 )
 
 const Order = mongoose.model('Order', orderSchema);

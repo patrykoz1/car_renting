@@ -2,6 +2,15 @@
   <div class="col-md-6 m-auto">
     <div class="card card-body text-center">
       Nasze samochody
+      <ul style="list-style: none;">
+        <% cars.forEach(function(value) { %>
+          <li>
+            <a href=<%= value.pic_1 %>>
+            <%= value.model %><%= value.name %> <%= value.name %>
+            </a>
+          </li>
+        <% }) %>
+      </ul>
     </div>
   </div>
 </div>

@@ -21,10 +21,12 @@ const CarSchema = mongoose.Schema({
     pic_2:{
         type:String,
         required:true,
-    }
+    },
 
 
-})
+},
+{ collection: 'cars' }
+)
 
 const Car = mongoose.model('Car', CarSchema)
 module.exports = Car

@@ -8,9 +8,9 @@ const passport = require('passport');
 
 
 /* GET cars listing. */
-router.get('/search/:name', (req, res) =>{
+router.get('/search/:name', async(req, res) =>{
     const searched_name = req.params.name;
-    var cars=Car.find( { "authors": { "$regex": searched_name, "$options": "i" } },
+    var cars= await Car.find( { "authors": { "$regex": searched_name, "$options": "i" } },
         function(err,docs) {
         } )
     console.log(cars);
@@ -19,10 +19,10 @@ router.get('/search/:name', (req, res) =>{
 
 });
 router.get('/getAll', async(req, res) =>{
-    const usr=await User.find({});
-    //console.log(req.user);
+    const usr=await Car.find({});
+    console.log("TUUTT?");
     console.log(usr);
-    res.render('main', {user: req.user, users:usr} );
+    res.render('main', {user: req.user, cars:usr} );
 
 });
 router.get('/get/:id', async(req, res) =>{

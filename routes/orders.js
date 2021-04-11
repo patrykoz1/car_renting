@@ -20,10 +20,19 @@ const order = new Order({
 });
 
 //confirmation
-router.post('/order/:id', (req, res) =>{
-let order = Order.findById(req.params.id);
-order.status="confirmed";
-order.save();
+router.post('/confirmOrder/:id', async (req, res) => {
+    let order = await Order.findById(req.params.id);
+    order.status = "confirmed";
+    order.save();
+    res.result(200).json({
+        message: 'Ok'
+    })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
+        });
 });
 
 router.patch('/order/:id', (req, res) =>{
@@ -70,6 +79,20 @@ router.delete('/order/:id', (req, res) =>{
                 error: err
             });
         });
+});
+
+//get all orders
+router.get('/getAll', async(req, res) =>{
+    if(req.user) {//jezeli uzytkownik zostal zalogowany
+        const ord = await Order.find({});
+        //console.log(req.user);
+        //console.log(usr);
+        res.render('main', {user: req.user, orders: order});
+    }
+    else{
+        res.redirect('/users/login')
+    }
+
 });
 
 module.exports = router;

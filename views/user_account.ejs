@@ -1,3 +1,27 @@
-<h1 class="mt-4">Dashboard</h1>
-<p class="lead mb-3">Welcome <%= user.name %></p>
-<a href="/users/logout" class="btn btn-secondary">Logout</a>
+<h1 class="mt-4">Twoje konto</h1>
+<p class="lead mb-3">Witaj <%= user.name %></p>
+
+<div class="row mt-5">
+    <div class="col-md-6 m-auto">
+        <div class="card card-body text-center">
+            Twoje zamówienia
+            <ul style="list-style: none;">
+                <% orders.forEach(function(value) { %>
+                    <li>
+                        <table>
+                            <tr>
+                                <td>id</td>
+                                <td>model marka</td>
+                                <td>data start</td>
+                                <td>data stop</td>
+                                <td>cena</td>
+                                <td>confirm</td>
+                            </tr>
+                        </table>
+
+                    </li>
+                <% }) %>
+            </ul>
+        </div>
+    </div>
+</div>

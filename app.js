@@ -19,13 +19,29 @@ require('./config/passport')(passport);
 
 // DB Config
 const db = require('./config/keys').mongoURI;
-
-mongoose.connect(
+/*(async () => {
+    try {
+        await mongoose.connect(
     process.env.DB_CONNECTION,
     {useNewUrlParser:true},
     ()=>console.log('connected to DB')
-    );
+    );}
+catch (exc){console.log('conn error!')}
+})()*/
+async function foo() {
+    try {
+    console.log("Proba polaczenia");
+await mongoose.connect(
+    process.env.DB_CONNECTION,
+    {useNewUrlParser:true},
+    ()=>console.log('connected to DB')
 
+)}catch (err){    console.log("Error during connection: "+err);
+}}
+foo();
+mongoose.connection.on('error', err => {
+    console.log("Error after connection: "+err);
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
