@@ -13,7 +13,7 @@ router.get('/register',
 
 router.get('/login',
     function (req, res) {
-    res.render('login', {user: req.user} )
+        res.render('login', {user: req.user} )
     });
 
 //Register Handle
@@ -31,6 +31,7 @@ router.post('/register',(req,res)=>{
         res.render('register',{
             errors,name,surname,email,password
         });
+       // res.status(501).send("ERROR IN FORM");
 
     }
     else{
@@ -40,6 +41,8 @@ router.post('/register',(req,res)=>{
                 res.render('register',{
                     errors,name,surname,email,password
                 });
+                //res.status(501).send("EMAIL IS ALREADY USED");
+
             }else{
                 const newUser= new User({
                     name,surname,email,password
@@ -49,6 +52,7 @@ router.post('/register',(req,res)=>{
                     bcrypt.hash(newUser.password,salt,(err,hash) => {
                         if (err){
                             res.redirect('/users/register');
+                            //res.status(501).send("ERROR IN PASSWORD");
 
                         }
 
@@ -59,16 +63,61 @@ router.post('/register',(req,res)=>{
                                 'Zostałeś zarejestrowany! Możesz się zalogować!'
                             );
                             res.redirect('/users/login');
+                            //res.status(200).send("USER ADDED");
+
                         }).catch(err => console.log(err));
 
                     }))}});}})
 // Login
 router.post('/login', (req, res, next) => {
-    passport.authenticate('local', {
+      passport.authenticate('local', {
         successRedirect: '/index',
         failureRedirect: '/users/login',
         failureFlash: true
-    })(req, res, next);
+    })
+    //req.flash('success_msg', 'Zostałeś za');
+    (req, res, next);
+    /*User.find({ email: req.body.email })
+        .exec()
+        .then(user => {
+            if (user.length < 1) {
+                return res.status(401).json({
+                    message: "Authorization failed"
+                });
+            }
+            bcrypt.compare(req.body.password, user[0].password, (err, result) => {
+                if (err) {
+                    return res.status(401).json({
+                        message: "Authorization failed"
+                    });
+                }
+                if (result) {
+                    const token = jwt.sign(
+                        {
+                            email: user[0].email,
+                            userId: user[0]._id
+                        },
+                        process.env.JWT_KEY,
+                        {
+                            expiresIn: "1h"
+                        }
+                    );
+                    return res.status(200).json({
+                        message: "Authorization successful",
+                        token: token
+                    });
+                }
+                res.status(401).json({
+                    message: "Authorization failed"
+                });
+            });
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
+        });*/
 });
 
 // Logout

@@ -11,9 +11,10 @@ const CarSchema = mongoose.Schema({
     price:{
         type: Number,
         required: true,},
-    available: {
-        type: Boolean,
-        required: true,},
+    reserved:{
+        type:[String],
+
+    },
     pic_1:{
         type:String,
         required:true,
@@ -21,10 +22,12 @@ const CarSchema = mongoose.Schema({
     pic_2:{
         type:String,
         required:true,
-    }
+    },
 
 
-})
+},
+{ collection: 'cars' }
+)
 
-const model = mongoose.model('Cars', CarSchema)
-module.exports = model
+const Car = mongoose.model('Car', CarSchema)
+module.exports = Car

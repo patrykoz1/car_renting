@@ -1,3 +1,43 @@
-<h1 class="mt-4">Dashboard</h1>
-<p class="lead mb-3">Welcome <%= user.name %></p>
-<a href="/users/logout" class="btn btn-secondary">Logout</a>
+<h1 class="mt-4">Witaj <%= user.name %></h1>
+<% include ('./partials/messages.ejs')%>
+    Wszystkie zamówienia
+    <table class="table float-left">
+        <tbody>
+        <% orders.forEach(function(value) { %>
+        <tr>
+
+            <form method="POST" action="/orders/order/update/<%=value.id%>">
+                <td>Id zamówienia <%= value.id %></td>
+
+                <td><input type="datetime-local" name="dateStart" value= <%= value.dateStart  %>
+                    min=<%= value.dateStart %> max=<%= value.dateFinish %>> data rozpoczęcia</td>
+
+                <td><input type="datetime-local" name="dateFinish" value= <%= value.dateFinish %>
+                    min=<%= value.dateStart %> max=<%= value.dateFinish %> >data zakończenia</td>
+                <td>Cena: <%= value.total %></td>
+                <td>Ilość dni <%= value.numberOfDays %></td>
+                <%if(value.status=="0"){%>
+                <td> <button type="submit" class="btn btn-primary btn-lg">Edytuj</button></td>
+                <%}else{%>
+                <td><button type="button" class="btn btn-secondary btn-lg" disabled>Zaakceptowane!</button><td>
+                <%}%>
+            </form>
+            <form method="POST" action="/orders/delete/<%=value.id%>">
+                <%if(value.status=="0"){%>
+                <td><button type="submit" id="del-button" class="btn btn-primary btn-lg " value=<%=value.id%>>Usuń</button></td>
+                <%}else{%>
+                <td><button type="button" class="btn btn-secondary btn-lg" disabled>Zaakceptowane!</button></td>
+                <%}%>
+            </form>
+            <form method="POST" action="/orders/confirmOrderByUser/<%=value.id%>">
+                <%if(value.status=="0"){%>
+                    <td><button type="submit" class="btn btn-primary btn-lg">Akceptuj</button></td>
+                <%}else{%>
+                    <td><button type="button" class="btn btn-secondary btn-lg" disabled>Zaakceptowane!</button></td>
+                <%}%>
+            </form>
+
+        </tr>
+        <% }) %>
+        </tbody>
+    </table>
