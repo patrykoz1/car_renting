@@ -11,9 +11,10 @@ const CarSchema = mongoose.Schema({
     price:{
         type: Number,
         required: true,},
-    available: {
-        type: Boolean,
-        required: true,},
+    reserved:{
+        type:[String],
+
+    },
     pic_1:{
         type:String,
         required:true,

@@ -1,3 +1,54 @@
 <h1 class="mt-4">Dashboard</h1>
 <p class="lead mb-3">Witaj <%= user.name %></p>
-<a href="/users/logout" class="btn btn-secondary">Logout</a>
+<% include ('./partials/messages.ejs')%>
+<div class="row mt-5 float-left">
+            Wszystkie zamówienia
+            <table class="table float-left">
+                <tbody>
+                <% orders.forEach(function(value) { %>
+                    <tr>
+
+                            <form method="POST" action="/orders/order/update/<%=value.id%>">
+                            <td>Id zamówienia <%= value.id %></td>
+                            <td>Id klienta <%= value.userID %></td>
+                            <td><input type="datetime-local" value= <%= value.dateStart  %>
+                                min=<%= value.dateStart %> max=<%= value.dateFinish %>> data rozpoczęcia</td>
+
+                            <td><input type="datetime-local" value= <%= value.dateFinish %>
+                                min=<%= value.dateStart %> max=<%= value.dateFinish %> >data zakończenia</td>
+                            <td>Cena: <%= value.total %></td>
+                            <td>Ilość dni <%= value.numberOfDays %></td>
+                            <td> <button type="submit" class="btn btn-primary btn-lg">Edytuj i akceptuj</button></td>
+                            </form>
+                            <form method="POST" action="/orders/delete/<%=value.id%>">
+                                <td><button type="submit" id="del-button" class="btn btn-primary btn-lg " value=<%=value.id%>>Usuń</button></td></form>
+                            <form method="POST" action="/orders/confirmOrder/<%=value.id%>">
+                                <td><button type="submit" class="btn btn-primary btn-lg">Akceptuj</button></td></form>
+
+                    </tr>
+                <% }) %>
+                </tbody>
+            </table>
+    <table class="table float-left table-striped">
+        <tbody>
+        <% orders_old.forEach(function(value) { %>
+            <div>
+        <tr>
+            <td><b>Id zamówienia <%= value.id %></b></td>
+            <td>Id klienta <%= value.userID %></td>
+            <td>Id samochodu <%= value.carID %></td>
+        </tr>
+        <tr>
+            <td>Od <%= value.dateStart %></td>
+            <td>Do <%= value.dateFinish %></td>
+            <td>Ilosc dni <%= value.numberOfDays %></td>
+            <td>Cena <%= value.total %></td>
+
+        </tr>
+            </div>
+        <br>
+        <% }) %>
+        </tbody>
+    </table>
+</div>
+

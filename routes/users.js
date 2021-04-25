@@ -62,8 +62,8 @@ router.post('/register',(req,res)=>{
                                 'success_msg',
                                 'Zostałeś zarejestrowany! Możesz się zalogować!'
                             );
-                            //res.redirect('/users/login');
-                            res.status(200).send("USER ADDED");
+                            res.redirect('/users/login');
+                            //res.status(200).send("USER ADDED");
 
                         }).catch(err => console.log(err));
 

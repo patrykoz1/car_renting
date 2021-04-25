@@ -1,10 +1,36 @@
+<% include ('./partials/messages.ejs')%>
 <div class="row mt-5">
     <div class="col-md-6 m-auto">
-        <div class="card card-body">
-            <% include ('./partials/messages.ejs')%>
-            <div>
-                <p>Nazwa auta</p>
-            </div>
-        </div>
+            <table class="table float-left">
+                <tbody>
+                <tr>
+                    <form method="post" action="/orders/order/<%=len%>">
+                        <td><input name="start" type="datetime-local" value= <%= ds  %>
+                            min=<%= ds %> max=<%= ds %>> data rozpoczęcia</td>
+                            <input type="hidden" name="carID" value="<%=car.id%>">
+                            <input type="hidden" name="len" value="<%=len%>">
+                            <input type="hidden" name="price" value="<%=car.price%>">
+
+                        <td><input name="end" type="datetime-local" value= <%= de %>
+                            min=<%= de %> max=<%= de %> >data zakończenia</td>
+
+                        <td> <button type="submit" class="btn btn-primary btn-lg">Akceptuję rezerwację w powyższych dniach!</button></td>
+                    </form>
+
+                </tr>
+                </tbody>
+
+            </table>
     </div>
 </div>
+<script>
+    function foo(){
+        var day_1=document.getElementsByName('data_start').values();
+        var day_2=document.getElementsByName('data_end').values();
+
+        alert(day_1);
+
+        var x= document.getElementsByName('price');
+    }
+
+</script>
